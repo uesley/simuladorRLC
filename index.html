@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Circuitos 1</title>
+	<link rel="stylesheet" type="text/css" href="libs/css/bootstrap.min.css">
+</head>
+<body>
+	<div class='container center'>
+		<div class='col-8'>
+			<div class='form-group'>
+				<label>Selecione o tipo de circuito desejado: </label>
+				<select id='select_tipo' class='form-control'>
+					<option value='1' selected="">RLC série</option>
+					<option value='2'>RLC paralelo</option>
+					<option value='3'>RLC misto</option>
+				</select>
+				<img src="images/serie.jpg" class="col-md-5" id='circuito_img'>
+			</div>
+			<form id='rlc_data'>
+				<h5>Circuito RLC em série</h5>
+				<div class="form-group container">
+					<div class=" form-group  col-md-6">
+						Resistência (\( \Omega \)): 
+						<input type="number" name="resistencia" class='form-control'>
+						Capacitância (\( F \)) : 
+						<input type="number" name="capacitancia" class='form-control'>
+						Indutância (\( H  \)): 
+						<input type="number" name="indutancia" class='form-control'>
+						<span id='lbl_var'> (Corrente inicial no indutor) \(i _0 = \)</span> 
+						<input type="number" class="form-control" name='entrada_i0'>
+						<span id='lbl_var_d'>(Tensão inicial no capacitor) \(v _0 = \)</span> 
+						<input type="number"class="form-control" name='entrada_dv0'></input>
+					</div>
+					<input type="reset" class='btn btn-secondary right' name="" ame="" value='Limpar'>
+					<input type="submit" class='btn btn-primary right' name="" value='Enviar'>
+				</div>
+			</form>	
+		</div>	
+	
+		<div class="alert alert-primary col-9 resultado">
+			Resposta Natural: 
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			<span id='resposta_natural_x'>
+			</span>	<br>
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			<span id='resposta_natural_sr'>
+			</span>	<br>
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			<span id='resposta_natural_si'>
+			</span>	<br>
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			<span id='resposta_natural_sc'>
+			</span>	<br>
+			Frequência de Neper: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; \( \alpha \) = <span id='neper'></span>	<br>
+			Frequência ressonante:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; \( \omega _0\)= <span id='ressonante'></span><br>
+			Tipo de Amortecimento:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span id='resultado'></span> 
+
+		</div>
+	</div>
+</body>
+<script type="text/javascript" src="libs/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="libs/js/jquery-3.3.1.min.js"></script>
+<script type="text/javascript" src="libs/js/math.js"></script>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    extensions: ["tex2jax.js"],
+    jax: ["input/TeX","output/HTML-CSS"],
+    tex2jax: {inlineMath: [["$","$"],["\\(","\\)"]]}
+  });
+</script>
+<script type="text/javascript" src='libs/js/MathJax.js' async></script>
+<script type="text/javascript" src="main.js"></script>
+</html>''
