@@ -133,6 +133,31 @@ function subamortecido(vars){
 	}
 }
 
+//função para tratamento do circuito misto
+function calcular_parametros(vars){
+   console.log(vars);
+   
+   var A = vars.l1 * vars.l2;
+   var B = (vars.r2 * vars.l1) + (vars.r1 * vars.l2) + (vars.r2 * vars.l2);
+   var C = (vars.r1 * vars.r2) + Math.pow(vars.r2, 2);
+   var delta = Math.pow(B,2) - 4 * A * C;
+   var x1 = (-B + math.sqrt(delta) )/ (2 * A);
+   var x2 = (-B - math.sqrt(delta) )/ (2 * A);
+   var B1 = ( (vars.v / vars.l1) - ( (x1 * vars.v)/ vars.r1) ) * (1/ (x2-x1));
+   var A1 = (-vars.v/ vars.r1) - B1;
+   var M = (vars.r1 + vars.r2 + (vars.l1 * x1) )/ vars.r2;
+   var N = (vars.r1 + vars.r2 + (vars.l1 * x2) )/ vars.r2;
+   var A2 = M * A;
+   var B2 = N * B;
+   var eX1t = vars.r2 * (A1 - A2);
+   var eX2t = vars.r2 * (B1 - B2);
+   
+   return {
+      "vo" : eX1t + "e^{" + x1 + "t} (" + eX2t + "e^{" + x2 + "t}",
+   };
+   
+}
+
 ///// funções para controle da interface.  
 
 $(function(){
