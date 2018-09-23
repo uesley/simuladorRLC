@@ -106,11 +106,10 @@ function critico(vars){
 	return {
 		"formula" : "A _1 e^{st} + t e^{st}",
 		"funcao"  : A1 + "e^{" + S + "t} + "+A2+"te^{" + S + "t}",
-		"derivative": math.derivative(A1+'e^('+S+'*t) + '+A2+'*t*e^('+S+'*t)','t').replace('(','{').replace(')','}').replace('*',''),
 		"derivativeL": "e^{" + S + "t}("+ (A2 * S * vars.L) + "t + "+ (A1 * S + A2)*vars.L + ")",
 		"derivativeC": "e^{" + S + "t}("+ (A2 * S * vars.C) + "t + "+ (A1 * S + A2)*vars.C + ")",
-		"divided_R" : (A1/vars.R) + "e^{" + S + " *t} + " + (A2 / vars.R) + "t*e^{" + S + " t}", 
-		"multiply_R": (A1*vars.R) + "e^{" + S + " *t} + " + (A2 * vars.R) + "t*e^{" + S + " t}",
+		"divided_R" : (A1/vars.R) + "e^{" + S + " t} + " + (A2 / vars.R) + "te^{" + S + " t}", 
+		"multiply_R": (A1*vars.R) + "e^{" + S + " t} + " + (A2 * vars.R) + "te^{" + S + " t}",
 	};
 }
 
@@ -120,11 +119,11 @@ function subamortecido(vars){
 	var A2 = (vars.d_x0 + vars.alpha * A1) / wd;
 	return {
 		"formula" : "e^{-\\alpha t} ( B _1 cos( \\omega _d t) + B _2 sen( \\omega _d t) )",
-		"funcao"  : "e^{"+(-1)*vars.alpha + "t} (" + A1 + "cos(" + wd + "t)" + A2 + "sen(" + wd + " t))",
-		"derivativeL": "e^{" + (-1) * vars.alpha + "t}("+( (A2*wd -  vars.alpha * A1)*vars.L) + "cos("+wd+"t) + "+((-vars.L)*(vars.alpha*A2 + A1 *wd)) + "sen("+wd+"t))",
-		"derivativeC": "e^{" + (-1) * vars.alpha + "t}("+( (A2*wd -  vars.alpha * A1)*vars.C) + "cos("+wd+"t) + "+((-vars.C)*(vars.alpha*A2 + A1 *wd)) + "sen("+wd+"t))",
-		"divided_R" : "e^{"+(-1)*vars.alpha + "t} (" + A1/vars.R + "cos(" + wd + "t)" + A2/vars.R + "sen(" + wd + " t))", 
-		"multiply_R": "e^{"+(-1)*vars.alpha + "t} (" + A1*vars.R + "cos(" + wd + "t)" + A2*vars.R + "sen(" + wd + " t))",
+		"funcao"  : "e^{"+((-1) * vars.alpha ) + "t} (" + A1 + "cos(" + wd + "t)" + A2 + "sen(" + wd + " t))",
+		"derivativeL": "e^{" + ((-1) * vars.alpha) + "t}("+( (A2*wd -  vars.alpha * A1)*vars.L) + "cos("+wd+"t) + "+((-vars.L)*(vars.alpha*A2 + A1 *wd)) + "sen("+wd+"t))",
+		"derivativeC": "e^{" + ((-1) * vars.alpha) + "t}("+( (A2*wd -  vars.alpha * A1)*vars.C) + "cos("+wd+"t) + "+((-vars.C)*(vars.alpha*A2 + A1 *wd)) + "sen("+wd+"t))",
+		"divided_R" : "e^{"+((-1) * vars.alpha) + "t} (" + (A1 / vars.R) + "cos(" + wd + "t) +" + (A2 / vars.R) + "sen(" + wd + " t))", 
+		"multiply_R": "e^{"+((-1) * vars.alpha) + "t} (" + (A1 * vars.R) + "cos(" + wd + "t) +" + (A2 * vars.R) + "sen(" + wd + " t))",
 	}
 }
 
@@ -193,15 +192,10 @@ $("#rlc_data").submit(function(ev){
 	$('#neper').html(result.alpha);
 	$('#ressonante').html(result.omega);
 
-	if (sets.i0 > 0 && sets.v0 > 0){
-		$("#resposta_natural_x").html(result.resposta_natural.x);
-		$("#resposta_natural_sr").html(result.resposta_natural.s.r);
-		$("#resposta_natural_si").html(result.resposta_natural.s.i);
-		$("#resposta_natural_sc").html(result.resposta_natural.s.c);
-	}else {
-		$("#resposta_natural_formula").html(result.formula);
-		$("#resposta_natural_x").html(result.resposta_natural.x);
-	}
+		$("#resposta_natural_x").html(result.resposta_natural.x).show();
+		$("#resposta_natural_sr").html(result.resposta_natural.s.r).show();
+		$("#resposta_natural_si").html(result.resposta_natural.s.i).show();
+		$("#resposta_natural_sc").html(result.resposta_natural.s.c).show();
 
 	$('.resultado').show();
 	MathJax.Hub.Queue(
