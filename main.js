@@ -31,7 +31,8 @@ function obter_resultado(variaveis){
 						"omega":  variaveis.omega,
 						"R"    :  variaveis.R, 
 						"L"    :  variaveis.L, 
-						"C"    :  variaveis.C, 
+						"C"    :  variaveis.C,
+						"xs"   :  variaveis.xs, 
 					};	
 	var resposta = {
 						"resposta_natural" : {"x" : {},"s" : {"r" :{}, "i" : {} , "c" : {},}},						 
@@ -82,52 +83,55 @@ function obter_resposta_natural(vars){
 }
 
 function super_critico(vars){
+	console.log(vars);
+
 	var S1 = - vars.alpha + math.sqrt(Math.pow(vars.alpha,2) - Math.pow(vars.omega,2));
 	var S2 = - vars.alpha - math.sqrt(Math.pow(vars.alpha,2) - Math.pow(vars.omega,2));
-	var A1 = (vars.d_x0 - S2 * vars.x0) / (S1 - S2);
-	var A2 = vars.x0 - A1;
-
+	var A1 = (vars.d_x0 - S2 * (vars.xs - vars.x0)) / (S1 - S2);
+	var A2 = vars.xs - vars.x0 - A1;
+    var xs = vars.xs > 0 ? vars.xs : 0;
 	
 	return {
 		"formula"    : "A _1 e^{s _1 t} + A _2 e^{s _2 t}",
-		"funcao"     : A1 + "e^{" + S1 + " t} + " + A2 + "e^{"+S2+" t}",
+		"funcao"     : (xs ? (xs + ' + '):'') +A1 + "e^{" + S1 + " t} + " + A2 + "e^{"+S2+" t}",
 		"derivativeL": (A1 * S1 * vars.L) + 'e^{' + S1 + 't} + ' + (A2 * S2 * vars.L) + 'e^{' + S2 + 't}',
 		"derivativeC": (A1 * S1 * vars.C) + 'e^{' + S1 + 't} + ' + (A2 * S2 * vars.C) + 'e^{' + S2 + 't}',
-		"divided_R"  : (A1 / vars.R) + "e^{" + S1 + " t} + " + (A2 / vars.R) + "e^{" + S2 + " t}", 
-		"multiply_R" : (A1 * vars.R) + "e^{" + S1 + " t} + " + (A2 * vars.R) + "e^{" + S2 + " t}",
+		"divided_R"  : (xs ? (xs / vars.R) + " + " : '') +(A1 / vars.R) + "e^{" + S1 + " t} + " + (A2 / vars.R) + "e^{" + S2 + " t}", 
+		"multiply_R" : (xs ? (xs * vars.R) + " + " : '') +(A1 * vars.R) + "e^{" + S1 + " t} + " + (A2 * vars.R) + "e^{" + S2 + " t}",
  	};	
 }
 
 function critico(vars){
 	var S = - vars.alpha;
-	var A1 = vars.x0;
+	var A1 = vars.x0 - vars.xs;
 	var A2 = vars.d_x0 - S * A1;
-
+	var xs = vars.xs > 0 ? vars.xs : '';
 	return {
 		"formula" : "A _1 e^{st} + t e^{st}",
-		"funcao"  : A1 + "e^{" + S + "t} + "+A2+"te^{" + S + "t}",
+		"funcao"  : (xs ? (xs + ' + '):'') +" + "+A1 + "e^{" + S + "t} + "+A2+"te^{" + S + "t}",
 		"derivativeL": "e^{" + S + "t}("+ (A2 * S * vars.L) + "t + "+ (A1 * S + A2)*vars.L + ")",
 		"derivativeC": "e^{" + S + "t}("+ (A2 * S * vars.C) + "t + "+ (A1 * S + A2)*vars.C + ")",
-		"divided_R" : (A1/vars.R) + "e^{" + S + " t} + " + (A2 / vars.R) + "te^{" + S + " t}", 
-		"multiply_R": (A1*vars.R) + "e^{" + S + " t} + " + (A2 * vars.R) + "te^{" + S + " t}",
+		"divided_R" : (xs ? (xs / vars.R) + " + " : '') + (A1/vars.R) + "e^{" + S + " t} + " + (A2 / vars.R) + "te^{" + S + " t}", 
+		"multiply_R": (xs ? (xs * vars.R) + " + " : '') + (A1*vars.R) + "e^{" + S + " t} + " + (A2 * vars.R) + "te^{" + S + " t}",
 	};
 }
 
 function subamortecido(vars){
 	var wd = math.sqrt(math.pow(vars.omega,2) - math.pow(vars.alpha,2));
-	var A1 = vars.x0;
-	var A2 = (vars.d_x0 + vars.alpha * A1) / wd;
+	var A1 = vars.x0 - vars.xs;
+	var A2 = (vars.d_x0 + (vars.alpha * A1))/wd;
+	var xs = vars.xs > 0 ? vars.xs : '';
+
+	console.log({ "d_v0" : vars.d_x0 , "alpha" : vars.alpha,"omega" : vars.omega,A1, wd});
 	return {
 		"formula" : "e^{-\\alpha t} ( B _1 cos( \\omega _d t) + B _2 sen( \\omega _d t) )",
-		"funcao"  : "e^{"+((-1) * vars.alpha ) + "t} (" + A1 + "cos(" + wd + "t)" + A2 + "sen(" + wd + " t))",
-		"derivativeL": "e^{" + ((-1) * vars.alpha) + "t}("+( (A2*wd -  vars.alpha * A1)*vars.L) + "cos("+wd+"t) + "+((-vars.L)*(vars.alpha*A2 + A1 *wd)) + "sen("+wd+"t))",
-		"derivativeC": "e^{" + ((-1) * vars.alpha) + "t}("+( (A2*wd -  vars.alpha * A1)*vars.C) + "cos("+wd+"t) + "+((-vars.C)*(vars.alpha*A2 + A1 *wd)) + "sen("+wd+"t))",
-		"divided_R" : "e^{"+((-1) * vars.alpha) + "t} (" + (A1 / vars.R) + "cos(" + wd + "t) +" + (A2 / vars.R) + "sen(" + wd + " t))", 
-		"multiply_R": "e^{"+((-1) * vars.alpha) + "t} (" + (A1 * vars.R) + "cos(" + wd + "t) +" + (A2 * vars.R) + "sen(" + wd + " t))",
+		"funcao"  : xs +"e^{"+((-1) * vars.alpha ) + "t} (" + A1 + "cos(" + wd + "t) + " + A2 + "sen(" + wd + " t))",
+		"derivativeL": "e^{" + ((-1) * vars.alpha) + "t}("+((A2 * wd -  vars.alpha * A1)*vars.L) + "cos("+wd+"t) + "+((-vars.L)*(vars.alpha*A2 + A1 *wd)) + "sen("+wd+"t))",
+		"derivativeC": "e^{" + ((-1) * vars.alpha) + "t}("+((A2 * wd -  vars.alpha * A1)*vars.C) + "cos("+wd+"t) + "+((-vars.C)*(vars.alpha*A2 + A1 *wd)) + "sen("+wd+"t))",
+		"divided_R" : (xs ? (xs / vars.R) : '') + "e^{"+((-1) * vars.alpha) + "t} (" + (A1 / vars.R) + "cos(" + wd + "t) +" + (A2 / vars.R) + "sen(" + wd + " t))", 
+		"multiply_R": (xs ? (xs * vars.R) : '')  + "e^{"+((-1) * vars.alpha) + "t} (" + (A1 * vars.R) + "cos(" + wd + "t) +" + (A2 * vars.R) + "sen(" + wd + " t))",
 	}
 }
-
-
 
 ///// funções para controle da interface.  
 
@@ -172,6 +176,7 @@ $("#rlc_data").submit(function(ev){
 			return "Crítico (\\(\\alpha = \\omega _0\\))";
 		return "Subamortecido (\\(\\alpha < \\omega _0\\))"
 	}	
+	var vs = $('input[name=entrada_vs]').val()
 
 	var send = {
 		"C"  : $('input[name=capacitancia]').val(),
@@ -181,11 +186,13 @@ $("#rlc_data").submit(function(ev){
 		"v0" : $('input[name=entrada_v0]').val(),
 		"configuracao" : $("#select_tipo").val(),   
 	};
+	console.log(send);
 	var sets = obter_condicoes(send);
 	sets.configuracao = send.configuracao;
 	sets.R = send.R;
 	sets.L = send.L;
 	sets.C = send.C;
+	sets.xs = $('input[name=entrada_vs]').val();
 	var result = obter_resultado(sets);
 
 	$('#resultado').html(tipo(result.alpha, result.omega));
