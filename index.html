@@ -29,7 +29,7 @@
 						<span id='lbl_var'> (Corrente inicial no indutor) \(i _0 = \)</span> 
 						<input type="number" class="form-control" name='entrada_i0'>
 						<span id='lbl_var_d'>(Tensão inicial no capacitor) \(v _0 = \)</span> 
-						<input type="number"class="form-control" name='entrada_dv0'></input>
+						<input type="number"class="form-control" name='entrada_v0'></input>
 					</div>
 					<input type="reset" class='btn btn-secondary right' name="" ame="" value='Limpar'>
 					<input type="submit" class='btn btn-primary right' name="" value='Enviar'>
@@ -37,8 +37,11 @@
 			</form>	
 		</div>	
 	
-		<div class="alert alert-primary col-9 resultado">
+		<div class="alert alert-primary col-12 resultado">
 			Resposta Natural: 
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			<span id='resposta_natural_formula'>
+			</span>	<br>
 			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 			<span id='resposta_natural_x'>
 			</span>	<br>
@@ -50,10 +53,10 @@
 			</span>	<br>
 			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 			<span id='resposta_natural_sc'>
-			</span>	<br>
-			Frequência de Neper: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; \( \alpha \) = <span id='neper'></span>	<br>
-			Frequência ressonante:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; \( \omega _0\)= <span id='ressonante'></span><br>
-			Tipo de Amortecimento:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span id='resultado'></span> 
+			</span>	<br><br>
+			Frequência de Neper: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; \( \alpha \) = <span id='neper'></span>	<br><br>
+			Frequência ressonante:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; \( \omega _0\)= <span id='ressonante'></span><br><br>
+			Tipo de Amortecimento:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span id='resultado'></span>
 
 		</div>
 	</div>
