@@ -138,11 +138,11 @@ function subamortecido(vars){
 	var A2 = (vars.d_x0 + vars.alpha * A1) / wd;
 	return {
 		"formula" : "e^{-\\alpha t} ( B _1 cos( \\omega _d t) + B _2 sen( \\omega _d t) )",
-		"funcao"  : "e^{"+(-1)*vars.alpha + "t} (" + A1 + "cos(" + wd + "t)" + A2 + "sen(" + wd + " *t))",
+		"funcao"  : "e^{"+(-1)*vars.alpha + "t} (" + A1 + "cos(" + wd + "t)" + A2 + "sen(" + wd + " t))",
 		"derivativeL": "e^{" + (-1) * vars.alpha + "t}("+( (A2*wd -  vars.alpha * A1)*vars.L) + "cos("+wd+"t) + "+((-vars.L)*(vars.alpha*A2 + A1 *wd)) + "sen("+wd+"t))",
-		"derivativeL": "e^{" + (-1) * vars.alpha + "t}("+( (A2*wd -  vars.alpha * A1)*vars.C) + "cos("+wd+"t) + "+((-vars.C)*(vars.alpha*A2 + A1 *wd)) + "sen("+wd+"t))",
-		"divided_R" : "e^{"+(-1)*vars.alpha + "t} (" + A1/vars.R + "cos(" + wd + "t)" + A2/vars.R + "sen(" + wd + " *t))", 
-		"multiply_R": "e^{"+(-1)*vars.alpha + "t} (" + A1*vars.R + "cos(" + wd + "t)" + A2*vars.R + "sen(" + wd + " *t))",
+		"derivativeC": "e^{" + (-1) * vars.alpha + "t}("+( (A2*wd -  vars.alpha * A1)*vars.C) + "cos("+wd+"t) + "+((-vars.C)*(vars.alpha*A2 + A1 *wd)) + "sen("+wd+"t))",
+		"divided_R" : "e^{"+(-1)*vars.alpha + "t} (" + A1/vars.R + "cos(" + wd + "t)" + A2/vars.R + "sen(" + wd + " t))", 
+		"multiply_R": "e^{"+(-1)*vars.alpha + "t} (" + A1*vars.R + "cos(" + wd + "t)" + A2*vars.R + "sen(" + wd + " t))",
 	}
 }
 
