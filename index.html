@@ -21,15 +21,15 @@
 				<div class="form-group container">
 					<div class=" form-group  col-md-6">
 						Resistência (\( \Omega \)): 
-						<input type="number" name="resistencia" class='form-control'>
+						<input type="number" name="resistencia" class='form-control' step="0.001">
 						Capacitância (\( F \)) : 
-						<input type="number" name="capacitancia" class='form-control'>
+						<input type="number" name="capacitancia" class='form-control' step="0.001">
 						Indutância (\( H  \)): 
-						<input type="number" name="indutancia" class='form-control'>
+						<input type="number" name="indutancia" class='form-control' step="0.001">
 						<span id='lbl_var'> (Corrente inicial no indutor) \(i _0 = \)</span> 
-						<input type="number" class="form-control" name='entrada_i0'>
+						<input type="number" class="form-control" name='entrada_i0' step="0.001">
 						<span id='lbl_var_d'>(Tensão inicial no capacitor) \(v _0 = \)</span> 
-						<input type="number"class="form-control" name='entrada_v0'></input>
+						<input type="number"class="form-control" name='entrada_v0' step="0.001"></input>
 					</div>
 					<input type="reset" class='btn btn-secondary right' name="" ame="" value='Limpar'>
 					<input type="submit" class='btn btn-primary right' name="" value='Enviar'>

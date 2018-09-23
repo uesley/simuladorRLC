@@ -67,24 +67,6 @@ function obter_resultado(variaveis){
 	}
 	
 	return null;
-	switch(entradas.configuracao){
-		case SERIE :
-					condicoes.x0 = variaveis.i0;
-					condicoes.d_x0 = variaveis.d_i0; 
-					resposta.resposta_natural.i = obter_resposta_natural(condicoes);
-					condicoes.x0 = variaveis.v0;
-					condicoes.d_x0 = variaveis.d_v0;
-					resposta.resposta_natural.v = obter_resposta_natural(condicoes);
-					return resposta;
-		case PARALELO: 
-					condicoes.x0 = variaveis.i0;
-					condicoes.d_x0 = variaveis.d_i0; 
-					resposta.resposta_natural.i = obter_resposta_natural(condicoes);
-					condicoes.x0 = variaveis.v0;
-					condicoes.d_x0 = variaveis.d_v0;
-					resposta.resposta_natural.v = obter_resposta_natural(condicoes);
-					return resposta;	       
-	}	
 }
 
 function obter_resposta_natural(vars){
@@ -212,14 +194,13 @@ $("#rlc_data").submit(function(ev){
 	$('#ressonante').html(result.omega);
 
 	if (sets.i0 > 0 && sets.v0 > 0){
-		$("#resposta_natural_formula").html(result.resposta_natural.formula);
 		$("#resposta_natural_x").html(result.resposta_natural.x);
 		$("#resposta_natural_sr").html(result.resposta_natural.s.r);
 		$("#resposta_natural_si").html(result.resposta_natural.s.i);
 		$("#resposta_natural_sc").html(result.resposta_natural.s.c);
 	}else {
-		$("#resposta_natural_i").html(result.resposta_natural.i.formula);
-		$("#resposta_natural_v").html(result.resposta_natural.v.formula);
+		$("#resposta_natural_formula").html(result.formula);
+		$("#resposta_natural_x").html(result.resposta_natural.x);
 	}
 
 	$('.resultado').show();
